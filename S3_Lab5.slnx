@@ -1,3 +1,7 @@
 <Solution>
+  <Project Path="Abstractions/Abstractions.csproj" />
+  <Project Path="Data/Data.csproj" />
+  <Project Path="Domain/Domain.csproj" />
   <Project Path="S3_Lab5/S3_Lab5.csproj" />
+  <Project Path="Tests/Tests.csproj" />
 </Solution>
