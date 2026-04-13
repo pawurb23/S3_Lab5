@@ -2,6 +2,7 @@
   <Project Path="Abstractions/Abstractions.csproj" />
   <Project Path="Data/Data.csproj" />
   <Project Path="Domain/Domain.csproj" />
+  <Project Path="Extensions/Extensions.csproj" Id="6dc2fab7-cbe6-445b-98ed-286f23db7140" />
   <Project Path="S3_Lab5/S3_Lab5.csproj" />
   <Project Path="Tests/Tests.csproj" />
 </Solution>

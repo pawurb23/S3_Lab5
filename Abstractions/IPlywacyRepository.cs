@@ -10,5 +10,7 @@ namespace S3_Lab5.Abstractions
         void Dodaj(Plywak plywak);
         void Edytuj(Plywak plywak);
         void Usun(int id);
+
+        event Action<string> Sukces;
     }
 }

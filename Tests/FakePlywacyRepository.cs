@@ -7,9 +7,16 @@ namespace S3_Lab5.Tests
 {
     public class FakePlywacyRepository : IPlywacyRepository
     {
+        public event Action<string> Sukces;
         private readonly List<Plywak> _plywacy = new List<Plywak>();
 
-        public IEnumerable<Plywak> PobierzWszystkich() { return _plywacy; }
+        private void Powiadom(string komunikat) => Sukces?.Invoke(komunikat);
+
+        public IEnumerable<Plywak> PobierzWszystkich()
+        {             
+            Powiadom("Pobrano wszystkich pływaków");
+            return _plywacy; 
+        }
 
         public Plywak PobierzPoId(int id) { return _plywacy.FirstOrDefault(p => p.Id == id); }
 
@@ -19,6 +26,8 @@ namespace S3_Lab5.Tests
             else { plywak.Id = 1; }
 
             _plywacy.Add(plywak);
+
+            Powiadom($"Dodano zawodnika {plywak.ImieNazwisko}");
         }
 
         public void Edytuj(Plywak plywak)
@@ -33,12 +42,16 @@ namespace S3_Lab5.Tests
                 istniejacyPlywak.CzyAktywnyZawodnik = plywak.CzyAktywnyZawodnik;
                 istniejacyPlywak.IloscZlotychMedali = plywak.IloscZlotychMedali;
             }
+
+            Powiadom($"Zaktualizowano dane zawodnika o ID {plywak.Id}");
         }
 
         public void Usun(int id)
         {
             var plywakDoUsuniecia = PobierzPoId(id);
             if (plywakDoUsuniecia != null) { _plywacy.Remove(plywakDoUsuniecia); }
+
+            Powiadom($"Usunięto zawodnika o ID {id}");
         }
     }
 }

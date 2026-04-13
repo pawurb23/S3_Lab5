@@ -3,6 +3,8 @@ using S3_Lab5.Abstractions;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Extensions;
+using System.Windows;
 
 namespace S3_Lab5
 {
@@ -94,5 +96,20 @@ namespace S3_Lab5
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string name = null)
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+
+        public void PokazMinMaxCzasow()
+        {
+            if (Plywacy.Count == 0) { MessageBox.Show("Brak zawodników na liście!", "Informacja", 
+                MessageBoxButton.OK, MessageBoxImage.Information);        
+                return;
+            }
+
+            var wynik = Plywacy.MinMax(p => p.NajlepszyCzas);
+
+            MessageBox.Show($"Najlepszy czas na 50m: {wynik.Min} s\n" +
+                $"Najgorszy czas na 50m: {wynik.Max} s",
+                "Analiza"
+            );
+        }
     }
 }

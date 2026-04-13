@@ -8,7 +8,9 @@ namespace S3_Lab5.Data
 {
     public class SqlPlywacyRepository : IPlywacyRepository
     {
+        public event Action<string> Sukces;
         private readonly string _connectionString = @"Server=(localdb)\MSSQLLocalDB;Database=S3_Lab5_DB;Trusted_Connection=True;TrustServerCertificate=True;";
+        private void Powiadom(string komunikat) => Sukces?.Invoke(komunikat);
 
         public IEnumerable<Plywak> PobierzWszystkich()
         {
@@ -31,6 +33,8 @@ namespace S3_Lab5.Data
                     IloscZlotychMedali = reader.IsDBNull(5) ? null : reader.GetInt32(5)
                 });
             }
+            
+            Powiadom("Połączono z bazą SQL i pobrano aktualną listę pływaków.");
             return lista;
         }
 
@@ -51,6 +55,8 @@ namespace S3_Lab5.Data
 
             connection.Open();
             command.ExecuteNonQuery();
+
+            Powiadom($"Bd: Zapisano nowego zawodnika: {p.ImieNazwisko}");
         }
 
         public void Usun(int id)
@@ -61,6 +67,8 @@ namespace S3_Lab5.Data
             command.Parameters.AddWithValue("@id", id);
             connection.Open();
             command.ExecuteNonQuery();
+
+            Powiadom($"Bd: Usunięto zawodnika o ID {id}");
         }
 
         public Plywak PobierzPoId(int id) => throw new NotImplementedException();
@@ -79,6 +87,8 @@ namespace S3_Lab5.Data
 
             connection.Open();
             command.ExecuteNonQuery();
+
+            Powiadom($"Bd: Zaktualizowano dane zawodnika {p.ImieNazwisko}");
         }
     }
 }
